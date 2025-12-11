@@ -39,7 +39,7 @@ export default function Home() {
             initial={{ scale: 0, rotate: -180 }}
             animate={{ scale: 1, rotate: 0 }}
             transition={{
-              type: 'spring',
+              type: 'spring' as const,
               stiffness: 260,
               damping: 20,
               delay: 0.2,
@@ -210,7 +210,7 @@ export default function Home() {
             <motion.div
               className="relative h-[500px] bg-gradient-to-br from-navy-900 via-navy-800 to-navy-700 rounded-2xl overflow-hidden mb-12 shadow-2xl animate-gradient"
               whileHover={{ scale: 1.02 }}
-              transition={{ type: 'spring', stiffness: 300 }}
+              transition={{ type: 'spring' as const, stiffness: 300 }}
             >
               <div className="absolute inset-0 flex flex-col items-center justify-center p-8">
                 <motion.h2

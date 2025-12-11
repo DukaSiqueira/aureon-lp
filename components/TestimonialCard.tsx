@@ -36,7 +36,7 @@ export default function TestimonialCard({ testimonial, index }: TestimonialCardP
             <motion.div
               className="w-12 h-12 bg-gradient-to-br from-silver-200 to-silver-300 rounded-full flex items-center justify-center"
               whileHover={{ scale: 1.2 }}
-              transition={{ type: 'spring' }}
+              transition={{ type: 'spring' as const }}
               aria-hidden="true"
             >
               <span className="text-navy-900 font-bold text-sm">

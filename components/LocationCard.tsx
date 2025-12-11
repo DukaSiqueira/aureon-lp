@@ -24,7 +24,7 @@ export default function LocationCard({ location, index }: LocationCardProps) {
       <motion.div
         className="group bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300"
         whileHover={{ y: -5 }}
-        transition={{ type: 'spring', stiffness: 300 }}
+        transition={{ type: 'spring' as const, stiffness: 300 }}
       >
         <motion.a
           href={location.mapUrl}
