@@ -2,6 +2,7 @@
 
 import { PLANS } from '@/lib/constants';
 import PlanCard from './PlanCard';
+import PlansCarousel from './PlansCarousel';
 import SectionTitle from './SectionTitle';
 
 interface PlansSectionProps {
@@ -19,7 +20,13 @@ export default function PlansSection({ getPlanWhatsAppUrl }: PlansSectionProps) 
           subtitleClassName="text-silver-400"
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
+        {/* Mobile Carousel */}
+        <div className="md:hidden max-w-md mx-auto">
+          <PlansCarousel plans={PLANS} getWhatsAppUrl={getPlanWhatsAppUrl} />
+        </div>
+
+        {/* Desktop Grid - Planos lado a lado */}
+        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
           {PLANS.map((plan, index) => (
             <PlanCard
               key={plan.id}

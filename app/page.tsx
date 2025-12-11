@@ -11,6 +11,7 @@ import PlansSection from '@/components/PlansSection';
 import TestimonialCard from '@/components/TestimonialCard';
 import LocationCard from '@/components/LocationCard';
 import SectionTitle from '@/components/SectionTitle';
+import GalleryCarousel from '@/components/GalleryCarousel';
 import { motion } from 'framer-motion';
 import { CONTACT_INFO, LOCATIONS, TESTIMONIALS, GALLERY_ITEMS } from '@/lib/constants';
 import Image from 'next/image';
@@ -132,11 +133,17 @@ export default function Home() {
             </h2>
           </AnimatedSection>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 md:gap-3 lg:gap-4 w-full">
+          {/* Mobile Carousel */}
+          <div className="md:hidden max-w-md mx-auto">
+            <GalleryCarousel items={GALLERY_ITEMS} />
+          </div>
+
+          {/* Desktop Grid - Fotos lado a lado */}
+          <div className="hidden md:grid md:grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-4 w-full max-w-7xl mx-auto">
             {GALLERY_ITEMS.map((item, index) => (
               <AnimatedSection key={item.id} delay={index * 0.1} direction="scale" className="w-full">
                 <HoverCard className="card group w-full h-full">
-                  <div className="relative h-96 md:h-[32rem] lg:h-[36rem] bg-gradient-to-br from-navy-800 to-navy-700 overflow-hidden w-full min-w-0">
+                  <div className="relative h-[32rem] lg:h-[36rem] bg-gradient-to-br from-navy-800 to-navy-700 overflow-hidden w-full min-w-0">
                     <div className="absolute inset-0 flex items-center justify-center">
                       <span className="text-silver-300 text-lg md:text-xl font-light" aria-label={`Foto do cliente ${item.id}`}>
                         Foto do Cliente
