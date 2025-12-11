@@ -78,7 +78,7 @@ export default function PlansCarousel({ plans, getWhatsAppUrl }: PlansCarouselPr
             }}
             className="w-full touch-pan-y cursor-grab active:cursor-grabbing"
           >
-            <div className="w-full">
+            <div className="w-full px-14">
               <HoverCard className="card group h-full flex flex-col w-full">
                 <div className="p-6 flex-1 flex flex-col w-full">
                   <h3 className="text-2xl font-bold text-navy-900 mb-2">{plans[currentIndex].name}</h3>
@@ -116,21 +116,21 @@ export default function PlansCarousel({ plans, getWhatsAppUrl }: PlansCarouselPr
       {/* Navigation Arrows */}
       <button
         onClick={prevSlide}
-        className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-navy-900/80 hover:bg-navy-900 text-silver-100 p-2 rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-silver-100 hover:scale-110"
+        className="absolute left-1 top-1/2 -translate-y-1/2 z-20 bg-silver-100/95 hover:bg-silver-100 text-navy-900 p-2 rounded-full shadow-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-navy-900 hover:scale-110 backdrop-blur-sm border-2 border-silver-200"
         aria-label="Plano anterior"
       >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
         </svg>
       </button>
 
       <button
         onClick={nextSlide}
-        className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-navy-900/80 hover:bg-navy-900 text-silver-100 p-2 rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-silver-100 hover:scale-110"
+        className="absolute right-1 top-1/2 -translate-y-1/2 z-20 bg-silver-100/95 hover:bg-silver-100 text-navy-900 p-2 rounded-full shadow-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-navy-900 hover:scale-110 backdrop-blur-sm border-2 border-silver-200"
         aria-label="Próximo plano"
       >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
         </svg>
       </button>
 

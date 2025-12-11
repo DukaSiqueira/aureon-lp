@@ -2,7 +2,7 @@
 
 import AnimatedSection from '@/components/AnimatedSection';
 import AnimatedText from '@/components/AnimatedText';
-import AnimatedBackground from '@/components/AnimatedBackground';
+import LazyAnimatedBackground from '@/components/LazyAnimatedBackground';
 import HoverCard from '@/components/HoverCard';
 import ParallaxSection from '@/components/ParallaxSection';
 import Header from '@/components/Header';
@@ -12,26 +12,30 @@ import TestimonialCard from '@/components/TestimonialCard';
 import LocationCard from '@/components/LocationCard';
 import SectionTitle from '@/components/SectionTitle';
 import GalleryCarousel from '@/components/GalleryCarousel';
+import ErrorBoundary from '@/components/ErrorBoundary';
+import SkipToContent from '@/components/SkipToContent';
+import SocialButton from '@/components/SocialButton';
+import Lightbox from '@/components/Lightbox';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { CONTACT_INFO, LOCATIONS, TESTIMONIALS, GALLERY_ITEMS } from '@/lib/constants';
+import { useWhatsApp } from '@/hooks/useWhatsApp';
 import Image from 'next/image';
 
 export default function Home() {
-  const whatsappUrl = `https://wa.me/${CONTACT_INFO.whatsapp.phone}?text=${encodeURIComponent(CONTACT_INFO.whatsapp.message)}`;
-  const whatsappCurriculoUrl = `https://wa.me/${CONTACT_INFO.whatsapp.phone}?text=${encodeURIComponent('Olá! Vim do site e gostaria de enviar meu currículo para trabalhar na Aureon.')}`;
-  
-  const getPlanWhatsAppUrl = (planName: string) => {
-    return `https://wa.me/${CONTACT_INFO.whatsapp.phone}?text=${encodeURIComponent(`Olá! Vim do site e tenho interesse em assinar o ${planName} da Aureon. Gostaria de mais informações.`)}`;
-  };
+  const { whatsappUrl, whatsappCurriculoUrl, getPlanWhatsAppUrl } = useWhatsApp();
+  const [lightboxImage, setLightboxImage] = useState<{ src: string; alt: string } | null>(null);
 
   return (
-    <main className="min-h-screen bg-navy-900 text-silver-100">
-      <Header />
-      <ScrollToTop />
+    <ErrorBoundary>
+      <SkipToContent />
+      <main className="min-h-screen bg-navy-900 text-silver-100" id="inicio">
+        <Header />
+        <ScrollToTop />
       
       {/* Hero Section */}
       <section id="inicio" className="section-dark pt-32 pb-20 md:pt-40 md:pb-32 px-4 relative overflow-hidden">
-        <AnimatedBackground />
+        <LazyAnimatedBackground />
 
         <div className="max-w-6xl mx-auto text-center relative z-10">
           {/* Logo */}
@@ -142,8 +146,11 @@ export default function Home() {
           <div className="hidden md:grid md:grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-4 w-full max-w-7xl mx-auto">
             {GALLERY_ITEMS.map((item, index) => (
               <AnimatedSection key={item.id} delay={index * 0.1} direction="scale" className="w-full">
-                <HoverCard className="card group w-full h-full">
-                  <div className="relative h-[32rem] lg:h-[36rem] bg-gradient-to-br from-navy-800 to-navy-700 overflow-hidden w-full min-w-0">
+                <HoverCard className="card group w-full h-full cursor-pointer">
+                  <div 
+                    className="relative h-[32rem] lg:h-[36rem] bg-gradient-to-br from-navy-800 to-navy-700 overflow-hidden w-full min-w-0"
+                    onClick={() => setLightboxImage({ src: item.image, alt: item.title })}
+                  >
                     <div className="absolute inset-0 flex items-center justify-center">
                       <span className="text-silver-300 text-lg md:text-xl font-light" aria-label={`Foto do cliente ${item.id}`}>
                         Foto do Cliente
@@ -161,6 +168,16 @@ export default function Home() {
               </AnimatedSection>
             ))}
           </div>
+
+          {/* Lightbox */}
+          {lightboxImage && (
+            <Lightbox
+              isOpen={!!lightboxImage}
+              onClose={() => setLightboxImage(null)}
+              imageSrc={lightboxImage.src}
+              imageAlt={lightboxImage.alt}
+            />
+          )}
         </div>
       </section>
 
@@ -284,40 +301,16 @@ export default function Home() {
 
             <AnimatedSection delay={0.4} direction="scale">
               <div className="flex flex-wrap justify-center gap-6">
-                <motion.a
+                <SocialButton
                   href={CONTACT_INFO.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-transparent border-2 border-silver-100 text-silver-100 px-10 py-4 rounded-lg font-semibold hover:bg-silver-100 hover:text-navy-900 transition-all duration-300 relative overflow-hidden group inline-block"
-                  whileHover={{ scale: 1.1, y: -5 }}
-                  whileTap={{ scale: 0.95 }}
-                  aria-label="Seguir no Instagram"
-                >
-                  <motion.span
-                    className="absolute inset-0 bg-silver-100"
-                    initial={{ x: '-100%' }}
-                    whileHover={{ x: 0 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                  <span className="relative z-10">Instagram</span>
-                </motion.a>
-                <motion.a
+                  label="Instagram"
+                  ariaLabel="Seguir no Instagram"
+                />
+                <SocialButton
                   href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-transparent border-2 border-silver-100 text-silver-100 px-10 py-4 rounded-lg font-semibold hover:bg-silver-100 hover:text-navy-900 transition-all duration-300 relative overflow-hidden group inline-block"
-                  whileHover={{ scale: 1.1, y: -5 }}
-                  whileTap={{ scale: 0.95 }}
-                  aria-label="Falar no WhatsApp"
-                >
-                  <motion.span
-                    className="absolute inset-0 bg-silver-100"
-                    initial={{ x: '-100%' }}
-                    whileHover={{ x: 0 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                  <span className="relative z-10">WhatsApp</span>
-                </motion.a>
+                  label="WhatsApp"
+                  ariaLabel="Falar no WhatsApp"
+                />
               </div>
             </AnimatedSection>
           </div>
@@ -346,6 +339,7 @@ export default function Home() {
           </div>
         </AnimatedSection>
       </footer>
-    </main>
+      </main>
+    </ErrorBoundary>
   );
 }
